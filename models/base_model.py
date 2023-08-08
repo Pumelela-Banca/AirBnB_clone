@@ -2,7 +2,7 @@
 '''define class BaseModel'''
 import uuid
 import datetime
-
+from . import storage
 
 class BaseModel:
     '''class BaseModel'''
@@ -21,6 +21,8 @@ class BaseModel:
                     self.key = datetime.datetime.strptime(kwargs[key], '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     self.key = kwargs[key]
+        else:
+            storage.new(self)
 
     def __str__(self):
         ''' return printable string represantation
@@ -33,6 +35,8 @@ class BaseModel:
            with the current datetime
         '''
         self.updated_at = datetime.datetime.now()
+        storage.save()
+
 
     def to_dict(self):
         '''returns a dictionary containing all keys/values
