@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-module contains amenity information and properties
+module contains place information and properties
 """
 
 
