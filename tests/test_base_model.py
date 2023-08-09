@@ -47,6 +47,5 @@ class TestBaseModel(unittest.TestCase):
             f"[BaseModel] ({test1.id}) {test1.__dict__}")
 
 
-
 if __name__ == '__main__':
     unittest.main()
