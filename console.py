@@ -57,14 +57,35 @@ class HBNBCommand(cmd.Cmd):
             obj = storage.all()
             j = 0
             ky = 'BaseModel' + '.' + args[1]
-            for key in obj.keys():
-                    if ky ==  key:
-                        print(f"[{args[0]}] ({args[1]}) {obj[key]}")
-                        j = 1
-                        break
-            if  j == 0:
+            if obj.get(ky) is None:
                 print('** no instance found **')
+            else:
+                print(f"[{args[0]}] ({args[1]}) {obj[ky]}")
+           
+    def do_destroy(self, line):
+        '''Deletes an instance based on the class name and id'''
+        if line == '':
+            print('** class name missing **')
+            return
+        args = line.split()
+        if args[0] != 'BaseModel':
+            print("** class doesn't exist **")
+            return
+        elif len(args) == 1:
+            print('** instance id missing **')
+            return
+        else:
+            storage.reload()
+            obj = storage.all()
+            j = 0
+            ky = 'BaseModel' + '.' + args[1]
 
+            if obj.get(ky) is None:
+                print('** no instance found **')
+            else:
+                del obj[ky]
+                with open('file.json', 'w') as fh:
+                    json.dump(obj, fh)
 
 
 if __name__ == '__main__':
