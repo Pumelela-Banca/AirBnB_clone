@@ -23,6 +23,14 @@ class TestBaseModel(unittest.TestCase):
         #self.assertEqual(tes1.name, "Tom")
         #self.assertEqual(tes1.number, 89)
 
+    def test_unique_id(self):
+        """
+        check if id are unique to each instance
+        """
+        id1 = BaseModel()
+        id2 = BaseModel()
+        self.assertNotEqual(id1.id, id2.id)
+
     def test_time(self):
         """
         test time values for created_at and updated_at
