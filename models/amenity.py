@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-module contains amenity information and its classes
+module contains amenity information and its methods
 """
 
 
