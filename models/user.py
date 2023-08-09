@@ -12,6 +12,7 @@ class User(BaseModel):
     class controlling user details
     """
     def __init__(self):
+        BaseModel.__init__()
         self.email = ''
         self.password = ''
         self.first_name = ''
