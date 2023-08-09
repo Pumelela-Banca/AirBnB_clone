@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from models import base_model
+from models import storage
 import cmd
 import os
 import json
@@ -52,17 +53,16 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         else:
-            if os.path.exists('file.json'):
-                with open('file.json') as fh:
-                    obj = json.load(fh)
-                j = 0
-                for key in obj.keys():
-                    if args[1] in key:
+            storage.reload()
+            obj = storage.all()
+            j = 0
+            ky = 'BaseModel' + '.' + args[1]
+            for key in obj.keys():
+                    if ky ==  key:
                         print(f"[{args[0]}] ({args[1]}) {obj[key]}")
                         j = 1
-                if  j == 0:
-                    print('** no instance found **')
-            else:
+                        break
+            if  j == 0:
                 print('** no instance found **')
 
 
