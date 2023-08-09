@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-module contains city information and its classes
+module contains city information and its methods
 """
 
 
