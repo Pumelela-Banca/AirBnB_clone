@@ -4,15 +4,15 @@ module contains user and its instances
 """
 
 
-from base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class User(BaseModel):
     """
     class controlling user details
     """
-    def __init__(self):
-        BaseModel.__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.email = ''
         self.password = ''
         self.first_name = ''

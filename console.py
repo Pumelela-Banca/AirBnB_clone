@@ -2,8 +2,9 @@
 '''console Program that contains the entry
    point of the command interpreter
 '''
-from models import base_model
+from models.base_model import BaseModel
 from models import storage
+from models.user import User
 import cmd
 import os
 import json
@@ -12,6 +13,8 @@ import json
 class HBNBCommand(cmd.Cmd):
     ''' defines each command'''
     prompt = '$: '
+
+    dict_cls = {'BaseModel': BaseModel, 'User': User}
 
     def do_help(self, line):
         '''Get some help'''
@@ -50,11 +53,15 @@ class HBNBCommand(cmd.Cmd):
         ''' Creates a new instance of BaseModel '''
         if line == '':
             print('** class name missing **')
-        elif line == 'BaseModel':
-            model = base_model.BaseModel()
-            model.save()
-            print(model.id)
+            return
+        
         else:
+            for cl, val in HBNBCommand.dict_cls.items():
+                if cl == line:
+                    obj = val()
+                    obj.save()
+                    print(obj.id)
+                    return
             print("** class doesn't exist **")
 
     def do_show(self, line):
@@ -65,7 +72,8 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         args = line.split()
-        if args[0] != 'BaseModel':
+
+        if HBNBCommand.dict_cls.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -75,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
             '''storage.reload()'''
             obj = storage.all()
             j = 0
-            ky = 'BaseModel' + '.' + args[1]
+            ky = args[0] + '.' + args[1]
             if obj.get(ky) is None:
                 print('** no instance found **')
             else:
@@ -87,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         args = line.split()
-        if args[0] != 'BaseModel':
+        if HBNBCommand.dict_cls.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -97,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
             storage.reload()
             obj = storage.all()
             j = 0
-            ky = 'BaseModel' + '.' + args[1]
+            ky = args[0] + '.' + args[1]
 
             if obj.get(ky) is None:
                 print('** no instance found **')
@@ -110,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         ''' Prints all string representation of all
             instances based or not on the class name
         '''
-        if line == '' or line == 'BaseModel':
+        if line == '':
             storage.reload()
             obj = storage.all()
             lst = []
@@ -118,9 +126,20 @@ class HBNBCommand(cmd.Cmd):
                 args = key.split('.')
                 lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
             print(lst)
-        else:
-            print("** class doesn't exist **")
 
+        else:
+            if HBNBCommand.dict_cls.get(line) is None:
+                print("** class doesn't exist **")
+                return
+            storage.reload()
+            obj = storage.all()
+            lst = []
+            for key in obj.keys():
+                if line in key:
+                    args = key.split('.')
+                    lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
+            print(lst)
+    
     def do_update(self, line):
         '''  Updates an instance based on the class name
              and id by adding or updating attribute
@@ -130,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         args = line.split()
-        if args[0] != 'BaseModel':
+        if HBNBCommand.dict_cls.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -140,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
             storage.reload()
             obj = storage.all()
             j = 0
-            ky = 'BaseModel' + '.' + args[1]
+            ky = args[0] + '.' + args[1]
             if obj.get(ky) is None:
                 print('** no instance found **')
                 return
@@ -156,12 +175,12 @@ class HBNBCommand(cmd.Cmd):
             var = obj[ky]
             '''convert string value to dict to be able to use it as **kwargs'''
             var = eval(var)
-            model1 = base_model.BaseModel(**var)
+            obj = HBNBCommand.dict_cls.get(args[0])(**var)
             '''set attribute'''
             attr = args[2]
             att_value = args[3][1:-1]
-            setattr(model1, attr, att_value)
-            model1.save()
+            setattr(obj, attr, att_value)
+            obj.save()
 
 
 if __name__ == '__main__':
