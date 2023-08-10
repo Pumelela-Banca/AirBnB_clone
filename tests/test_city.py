@@ -14,3 +14,7 @@ class TestCity(unittest.TestCase):
     Test city class inputs
     """
     pass
+
+
+if __name__ == '__main__':
+    unittest.main()
