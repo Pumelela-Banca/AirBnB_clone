@@ -5,6 +5,11 @@
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
+from models.state import State
+from models.city import  City
+from models.amenity import Amenity 
+from models.review import Review
+from models.place import Place
 import cmd
 import os
 import json
@@ -14,7 +19,8 @@ class HBNBCommand(cmd.Cmd):
     ''' defines each command'''
     prompt = '$: '
 
-    dict_cls = {'BaseModel': BaseModel, 'User': User}
+    dict_cls = {'BaseModel': BaseModel, 'User': User, 'Place': Place,\
+            'State': State, 'City': City, 'Amenity': Amenity, 'Review': Review}
 
     def do_help(self, line):
         '''Get some help'''
