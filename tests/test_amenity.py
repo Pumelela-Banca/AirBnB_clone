@@ -9,7 +9,7 @@ from models.base_model import BaseModel
 from models.amenity import Amenity
 
 
-class TestBaseModel(unittest.TestCase):
+class TestAmenity(unittest.TestCase):
     """
     Test all possible inputs on Amenity
     """
