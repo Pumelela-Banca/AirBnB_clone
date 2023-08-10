@@ -35,42 +35,45 @@ class HBNBCommand(cmd.Cmd):
                 "update": self.do_update
         }
         args = line.split('.')
-        if len(args) != 2:
-            print(f"*** Unknown syntax: {line}")
-            return False
-        if HBNBCommand.dict_cls.get(args[0]) is None:
-            print(f"** class doesn't exist **")
-            return False
-        cmds = args[1].split('(')
-        if len(cmds) != 2:
-            print(f"*** Unknown syntax: {line}")
-            return False
-        arg_line = args[0]
-        if len(cmds[1]) > 1:
-            cmds[1] = '(' + cmds[1]
-            cmds[1] = cmds[1][:-1]
-            cmds[1] = cmds[1] + ',)'
-            cmds_tuple = eval(cmds[1])
-            if len(cmds_tuple) > 1 and type(cmds_tuple[1]) is dict:
-                arg_line += ' ' + cmds_tuple[0]
-                for ky, vl in cmds_tuple[1].items():
-                    update_str = arg_line
-                    update_str += ' ' + ky + ' ' + vl
-                    for k, v in cmnd_dict.items():
-                        if k == cmds[0]:
-                            v(update_str)
-                            print(update_str)
-                            break
-                return
-            for i in cmds_tuple:
-                arg_line += ' ' + i
-        flag = 0
-        for k, v in cmnd_dict.items():
-            if k == cmds[0]:
-                v(arg_line)
-                flag = 1
-                break
-        if flag == 0:
+        try:
+            if len(args) != 2:
+                print(f"*** Unknown syntax: {line}")
+                return False
+            if HBNBCommand.dict_cls.get(args[0]) is None:
+                print(f"** class doesn't exist **")
+                return False
+            cmds = args[1].split('(')
+            if len(cmds) != 2:
+                print(f"*** Unknown syntax: {line}")
+                return False
+            arg_line = args[0]
+            if len(cmds[1]) > 1:
+                cmds[1] = '(' + cmds[1]
+                cmds[1] = cmds[1][:-1]
+                cmds[1] = cmds[1] + ',)'
+                cmds_tuple = eval(cmds[1])
+                if len(cmds_tuple) > 1 and type(cmds_tuple[1]) is dict:
+                    arg_line += ' ' + cmds_tuple[0]
+                    for ky, vl in cmds_tuple[1].items():
+                        update_str = arg_line
+                        update_str += ' ' + str(ky) + ' ' + str(vl)
+                        for k, v in cmnd_dict.items():
+                            if k == cmds[0]:
+                                v(update_str)
+                                break
+                    return
+                for i in cmds_tuple:
+                        arg_line += ' ' + i
+            flag = 0
+            for k, v in cmnd_dict.items():
+                if k == cmds[0]:
+                    v(arg_line)
+                    flag = 1
+                    break
+            if flag == 0:
+                print(f"*** Unknown syntax: {line}")
+                return False
+        except Exception:
             print(f"*** Unknown syntax: {line}")
             return False
 
@@ -237,8 +240,10 @@ class HBNBCommand(cmd.Cmd):
             obj = HBNBCommand.dict_cls.get(args[0])(**var)
             '''set attribute'''
             attr = args[2]
-            att_value = args[3][1:-1] if args[3][1] == '"'\
-                and args[3][-1] == '"' else args[3]
+            try:
+                att_value = eval(args[3])
+            except Exception:
+                att_value = args[3]
             setattr(obj, attr, att_value)
             obj.save()
 
