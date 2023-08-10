@@ -18,3 +18,7 @@ class TestBaseModel(unittest.TestCase):
         Test if class can be developed
         """
         pass
+
+
+if __name__ == '__main__':
+    unittest.main()
