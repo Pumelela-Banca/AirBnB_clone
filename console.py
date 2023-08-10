@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
                                 break
                     return
                 for i in cmds_tuple:
-                        arg_line += ' ' + i
+                    arg_line += ' ' + i
             flag = 0
             for k, v in cmnd_dict.items():
                 if k == cmds[0]:

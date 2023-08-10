@@ -20,12 +20,14 @@ class FileStorage:
         instances
         """
         return FileStorage.__objects
-    
+
     def new(self, obj):
         """
         adds new value to __objects
         """
-        FileStorage.__objects[f'{obj.__class__.__name__}.{obj.id}'] = f'{obj.to_dict()}'
+        key = f'{obj.__class__.__name__}.{obj.id}'
+        value = f'{obj.to_dict()}'
+        FileStorage.__objects[key] = value
 
     def save(self):
         """
