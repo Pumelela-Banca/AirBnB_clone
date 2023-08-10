@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 Tests base model class and its instances
 """
