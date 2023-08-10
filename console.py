@@ -46,8 +46,8 @@ class HBNBCommand(cmd.Cmd):
             print(f"*** Unknown syntax: {line}")
             return False
         arg_line = args[0]
-        if len(cmds) > 1:
-            cmds[1] = '(' +  cmds[1]
+        if len(cmds[1]) > 1:
+            cmds[1] = '(' + cmds[1]
             cmds[1] = cmds[1][:-1]
             cmds[1] = cmds[1] + ',)'
             cmds_tuple = eval(cmds[1])
@@ -93,11 +93,12 @@ class HBNBCommand(cmd.Cmd):
             print("Updates an instance based on the class name "
                   "and id by adding or updating attribute "
                   "(save the change into the JSON file).")
-
+        elif line == 'count':
+            print("count number of instance of specific class")
         else:
-            print('Documented commands (type help <topic>):')
+            print('\nDocumented commands (type help <topic>):')
             print('========================================')
-            print('EOF  help  quit\n')
+            print('EOF  help  quit create show update count all\n')
 
     def do_quit(self, line):
         '''exit the program'''
@@ -237,7 +238,7 @@ class HBNBCommand(cmd.Cmd):
             '''set attribute'''
             attr = args[2]
             att_value = args[3][1:-1] if args[3][1] == '"'\
-                    and args[3][-1] == '"' else args[3]
+                and args[3][-1] == '"' else args[3]
             setattr(obj, attr, att_value)
             obj.save()
 
