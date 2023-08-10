@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+
+"""
+file storage module that works with file.json to
+store user, place, amenity, city, state and review
+"""
+
+
 import os
 import json
 
