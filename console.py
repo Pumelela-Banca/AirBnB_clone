@@ -88,7 +88,6 @@ class HBNBCommand(cmd.Cmd):
         elif line == 'show':
             print("Prints the string representation "
                   "of an instance based on the class name")
-
         elif line == 'all':
             print("Prints all string representation of "
                   "all instances based or not on the class name")
@@ -99,9 +98,9 @@ class HBNBCommand(cmd.Cmd):
         elif line == 'count':
             print("count number of instance of specific class")
         else:
-            print('\nDocumented commands (type help <topic>):')
-            print('========================================')
-            print('EOF  help  quit create show update count all\n')
+            print('\nDocumented commands (type help <topic>):\n'
+                  '========================================\n'
+                  'EOF  help  quit create show update count all\n\n')
 
     def do_quit(self, line):
         '''exit the program'''
@@ -248,6 +247,12 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
     def do_count(self, line):
+        if line == "":
+            print('** class name missing **')
+            return False
+        elif HBNBCommand.dict_cls.get(line) is None:
+            print("** class doesn't exist **")
+            return False
         storage.reload()
         obj = storage.all()
         count = 0
