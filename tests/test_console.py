@@ -1,15 +1,14 @@
 #!/usr/bin/python3
 ''' define TestConsole class, unittest console app
 '''
-
-
 import sys
 import os
-from  console import HBNBCommand
+from console import HBNBCommand
 import unittest
 from unittest.mock import patch
 from io import StringIO
 import uuid
+
 
 class TestConsole(unittest.TestCase):
     ''' Test console module '''
@@ -24,7 +23,7 @@ class TestConsole(unittest.TestCase):
         self.err5 = "** attribute name missing **"
         self.err6 = "** value missing **"
         self.err = "*** Unknown syntax: "
-        
+
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             self.str1 = output.getvalue().strip()
@@ -104,19 +103,18 @@ class TestConsole(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             self.assertEqual(length, len(output.getvalue().strip()))
-        
+
         """ test with name of class missing """
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create"))
             self.assertEqual(self.err1, output.getvalue().strip())
-        
+
         """test create with not existing class"""
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create jhghg"))
             self.assertEqual(self.err2, output.getvalue().strip())
 
     def test_show(self):
-
         '''test show with class missing'''
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("show"))
@@ -141,7 +139,6 @@ class TestConsole(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(f"show User {self.str1}"))
             self.assertIn(self.str1, output.getvalue().strip())
-
 
     def test_destroy(self):
         '''test  with class missing'''
@@ -228,13 +225,15 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(self.err5, output.getvalue().strip())
 
         """test with value missing"""
+        line1 = f"update User {self.str1} first_name"
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(f"update User {self.str1} first_name"))
+            self.assertFalse(HBNBCommand().onecmd(line1))
             self.assertEqual(self.err6, output.getvalue().strip())
 
         """test with more than one attr-value"""
+        line2 = f"update User {self.str1} first_name 'john' Age 32"
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(f"update User {self.str1} first_name 'john' Age 32"))
+            self.assertFalse(HBNBCommand().onecmd(line2))
             self.assertFalse(HBNBCommand().onecmd(f"show User {self.str1}"))
             self.assertNotIn('Age: 32', output.getvalue().strip())
 
@@ -249,6 +248,5 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("", output.getvalue().strip())
 
 
-        
 if __name__ == "__main__":
     unitest.main()
