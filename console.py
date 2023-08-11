@@ -148,7 +148,9 @@ class HBNBCommand(cmd.Cmd):
             if obj.get(ky) is None:
                 print('** no instance found **')
             else:
-                print(f"[{args[0]}] ({args[1]}) {obj[ky]}")
+                Model = HBNBCommand.dict_cls.get(args[0])
+                model = Model(**eval(obj.get(ky)))
+                print(model)
 
     def do_destroy(self, line):
         '''Deletes an instance based on the class name and id'''
@@ -183,9 +185,11 @@ class HBNBCommand(cmd.Cmd):
             storage.reload()
             obj = storage.all()
             lst = []
-            for key in obj.keys():
+            for key, value in obj.items():
                 args = key.split('.')
-                lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
+                Model = HBNBCommand.dict_cls.get(args[0])
+                model = Model(**eval(value))
+                lst.append(model.__str__())
             print(lst)
 
         else:
@@ -195,10 +199,12 @@ class HBNBCommand(cmd.Cmd):
             storage.reload()
             obj = storage.all()
             lst = []
-            for key in obj.keys():
+            for key, value in obj.items():
                 if line in key:
                     args = key.split('.')
-                    lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
+                    Model = HBNBCommand.dict_cls.get(args[0])
+                    model = Model(**eval(value))
+                    lst.append(model.__str__())
             print(lst)
 
     def do_update(self, line):
