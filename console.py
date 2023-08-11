@@ -165,7 +165,6 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         else:
-            storage.reload()
             obj = storage.all()
             j = 0
             ky = args[0] + '.' + args[1]
@@ -181,9 +180,8 @@ class HBNBCommand(cmd.Cmd):
         ''' Prints all string representation of all
             instances based or not on the class name
         '''
+        obj = storage.all()
         if line == '':
-            storage.reload()
-            obj = storage.all()
             lst = []
             for key, value in obj.items():
                 args = key.split('.')
@@ -196,8 +194,6 @@ class HBNBCommand(cmd.Cmd):
             if HBNBCommand.dict_cls.get(line) is None:
                 print("** class doesn't exist **")
                 return
-            storage.reload()
-            obj = storage.all()
             lst = []
             for key, value in obj.items():
                 if line in key:
@@ -223,7 +219,6 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         else:
-            storage.reload()
             obj = storage.all()
             j = 0
             ky = args[0] + '.' + args[1]
@@ -259,7 +254,6 @@ class HBNBCommand(cmd.Cmd):
         elif HBNBCommand.dict_cls.get(line) is None:
             print("** class doesn't exist **")
             return False
-        storage.reload()
         obj = storage.all()
         count = 0
         for key in obj.keys():
