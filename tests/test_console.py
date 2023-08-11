@@ -36,10 +36,12 @@ class TestConsole(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(f"destroy User {self.str1}"))
 
     def test_quit_exits(self):
+        '''test do_quit method'''
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertTrue(HBNBCommand().onecmd("quit"))
 
     def test_EOF_exits(self):
+        '''test do_EOF method'''
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertTrue(HBNBCommand().onecmd("EOF"))
 
