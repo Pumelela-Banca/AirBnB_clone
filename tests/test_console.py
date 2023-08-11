@@ -46,6 +46,7 @@ class TestConsole(unittest.TestCase):
             self.assertTrue(HBNBCommand().onecmd("EOF"))
 
     def test_help(self):
+        ''' test do_help'''
         str1 = 'Documented commands (type help <topic>):\n'
         str1 += '========================================\n'
         str1 += 'EOF  help  quit create show update count all'
@@ -54,12 +55,14 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_create(self):
+        '''test help create command'''
         str1 = "Creates a new instance of BaseModel"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_all(self):
+        '''test help all command'''
         str1 = "Prints all string representation of "
         str1 += "all instances based or not on the class name"
         with patch("sys.stdout", new=StringIO()) as output:
@@ -67,6 +70,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_show(self):
+        '''test help show command'''
         str1 = "Prints the string representation "
         str1 += "of an instance based on the class name"
         with patch("sys.stdout", new=StringIO()) as output:
@@ -74,12 +78,14 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_count(self):
+        '''test help count command'''
         str1 = "count number of instance of specific class"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help count"))
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_update(self):
+        '''test help update command'''
         str1 = "Updates an instance based on the class name "
         str1 += "and id by adding or updating attribute "
         str1 += "(save the change into the JSON file)."
@@ -88,12 +94,14 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_EOF(self):
+        '''test help EOF command'''
         str1 = "EOF command to exit the program"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help EOF"))
             self.assertEqual(str1.strip(), output.getvalue().strip())
 
     def test_help_exit(self):
+        '''test help exit command'''
         str1 = "Quit command to exit the program"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help quit"))
