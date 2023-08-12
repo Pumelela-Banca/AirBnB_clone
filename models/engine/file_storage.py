@@ -8,6 +8,7 @@ store user, place, amenity, city, state and review
 
 import os
 import json
+from models.user import BaseModel
 from models.user import User
 from models.place import Place
 from models.state import State
