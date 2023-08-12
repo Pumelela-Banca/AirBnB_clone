@@ -10,6 +10,7 @@ from io import StringIO
 import uuid
 from models import storage
 
+
 class TestConsole(unittest.TestCase):
     ''' Test console module '''
     def setUp(self):
@@ -27,6 +28,7 @@ class TestConsole(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             self.str1 = output.getvalue().strip()
+            print("hello world")
 
     def tearDown(self):
         '''pre-define actions automatically happens
@@ -251,8 +253,7 @@ class TestConsole(unittest.TestCase):
         obj = storage.all()
         obj_key = f"User.{self.str1}"
         obj_value = obj[obj_key]
-        self.assertNotEqual(obj_value['created_at'], obj_value['updated_at'])
-
+        self.assertNotEqual(obj_value.created_at, obj_value.updated_at)
 
     def test_prompt_string(self):
         '''test prompt string'''

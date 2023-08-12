@@ -121,6 +121,7 @@ class HBNBCommand(cmd.Cmd):
                 if cl == line:
                     obj = val()
                     print(obj.id)
+                    obj.save()
                     return
             print("** class doesn't exist **")
 
@@ -147,9 +148,7 @@ class HBNBCommand(cmd.Cmd):
             if obj.get(ky) is None:
                 print('** no instance found **')
             else:
-                Model = HBNBCommand.dict_cls.get(args[0])
-                model = Model(**(obj.get(ky)))
-                print(model)
+                print(obj.get(ky))
 
     def do_destroy(self, line):
         '''Deletes an instance based on the class name and id'''
@@ -172,8 +171,11 @@ class HBNBCommand(cmd.Cmd):
                 print('** no instance found **')
             else:
                 del obj[ky]
+                dict1 = {}
+                for k, v in obj.items():
+                    dict1[k] = v.to_dict()
                 with open('file.json', 'w') as fh:
-                    json.dump(obj, fh)
+                    json.dump(dict1, fh)
 
     def do_all(self, line):
         ''' Prints all string representation of all
@@ -183,10 +185,7 @@ class HBNBCommand(cmd.Cmd):
         if line == '':
             lst = []
             for key, value in obj.items():
-                args = key.split('.')
-                Model = HBNBCommand.dict_cls.get(args[0])
-                model = Model(**value)
-                lst.append(model.__str__())
+                lst.append(value.__str__())
             print(lst)
 
         else:
@@ -196,10 +195,7 @@ class HBNBCommand(cmd.Cmd):
             lst = []
             for key, value in obj.items():
                 if line in key:
-                    args = key.split('.')
-                    Model = HBNBCommand.dict_cls.get(args[0])
-                    model = Model(**value)
-                    lst.append(model.__str__())
+                    lst.append(value.__str__())
             print(lst)
 
     def do_update(self, line):
@@ -234,16 +230,14 @@ class HBNBCommand(cmd.Cmd):
                     or args[2] == "updated_at":
                 return
             var = obj[ky]
-            '''convert string value to dict to be able to use it as **kwargs'''
-            obj = HBNBCommand.dict_cls.get(args[0])(**var)
             '''set attribute'''
             attr = args[2]
             try:
                 att_value = eval(args[3])
             except Exception:
                 att_value = args[3]
-            setattr(obj, attr, att_value)
-            obj.save()
+            setattr(var, attr, att_value)
+            var.save()
 
     def do_count(self, line):
         if line == "":
