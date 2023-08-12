@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 from io import StringIO
 import uuid
-
+from models import storage
 
 class TestConsole(unittest.TestCase):
     ''' Test console module '''
@@ -246,6 +246,13 @@ class TestConsole(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(line2))
             self.assertFalse(HBNBCommand().onecmd(f"show User {self.str1}"))
             self.assertNotIn('Age: 32', output.getvalue().strip())
+
+        """test created_at and updated_at attribute"""
+        obj = storage.all()
+        obj_key = f"User.{self.str1}"
+        obj_value = obj[obj_key]
+        self.assertNotEqual(obj_value['created_at'], obj_value['updated_at'])
+
 
     def test_prompt_string(self):
         '''test prompt string'''

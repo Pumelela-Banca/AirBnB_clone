@@ -72,17 +72,17 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn(tes1_name, hold.keys())
         # test values
         # change str to dictionary
-        self.assertIn("place", hold[tes1_name].values())
+        self.assertIn("place", hold[tes1_name].keys())
         self.assertIn("Tex", hold[tes1_name]["place"])
-        self.assertIn("sta", hold[tes1_name].values())
+        self.assertIn("sta", hold[tes1_name].keys())
         self.assertIn("5", hold[tes1_name]["sta"])
-        self.assertIn("id", hold[tes1_name].values())
+        self.assertIn("id", hold[tes1_name].keys())
         self.assertIn(f"{tes1.id}", hold[tes1_name]["id"])
-        self.assertIn("created_at", hold[tes1_name].values())
+        self.assertIn("created_at", hold[tes1_name].keys())
         self.assertIn(f"{tes1.created_at}", hold[tes1_name]["created_at"])
-        self.assertIn("updated_at", hold[tes1_name].values())
+        self.assertIn("updated_at", hold[tes1_name].keys())
         self.assertIn(f"{tes1.updated_at}", hold[tes1_name]["updated_at"])
-        self.assertIn("__class__", hold[tes1_name].values())
+        self.assertIn("__class__", hold[tes1_name].keys())
         self.assertIn(f"{tes1.__class__}", hold[tes1_name]["__class__"])
 
     def test_to_dict(self):
