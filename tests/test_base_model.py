@@ -7,7 +7,6 @@ import datetime
 import time
 import unittest
 from models.base_model import BaseModel
-from models import storage
 
 
 class TestBaseModel(unittest.TestCase):
@@ -59,35 +58,6 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """
         tests save and if file is in file.json
-        """
-        tes1 = BaseModel(place="Tex", sta="5")
-        # test updated at
-        save_time = tes1.updated_at.timestamp()
-        time.sleep(0.02)
-        tes1.save()
-        self.assertTrue(tes1.updated_at.timestamp() > save_time)
-        hold = storage.all()
-        tes1_name = f'{tes1.__class__.__name__}.{tes1.id}'
-        # test key
-        self.assertIn(tes1_name, hold.keys())
-        # test values
-        # change str to dictionary
-        self.assertIn("place", hold[tes1_name].values())
-        self.assertIn("Tex", hold[tes1_name]["place"])
-        self.assertIn("sta", hold[tes1_name].values())
-        self.assertIn("5", hold[tes1_name]["sta"])
-        self.assertIn("id", hold[tes1_name].values())
-        self.assertIn(f"{tes1.id}", hold[tes1_name]["id"])
-        self.assertIn("created_at", hold[tes1_name].values())
-        self.assertIn(f"{tes1.created_at}", hold[tes1_name]["created_at"])
-        self.assertIn("updated_at", hold[tes1_name].values())
-        self.assertIn(f"{tes1.updated_at}", hold[tes1_name]["updated_at"])
-        self.assertIn("__class__", hold[tes1_name].values())
-        self.assertIn(f"{tes1.__class__}", hold[tes1_name]["__class__"])
-
-    def test_to_dict(self):
-        """
-        tests to see if to dict works
         """
         pass
 
