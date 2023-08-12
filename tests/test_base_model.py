@@ -35,10 +35,11 @@ class TestBaseModel(unittest.TestCase):
         test initialization of class
         """
         tes1 = BaseModel(name="Tom", number=89)
-        self.assertEqual(tes1.__dict__, {'created_at': datetime.datetime.now(),
-                                         'id': f'{tes1.id}',
-                                         'name': 'Tom', 'number': 89,
-                                         'updated_at': datetime.datetime.now()})
+        self.assertEqual(tes1.__dict__, {
+            'created_at': datetime.datetime.now(),
+            'id': f'{tes1.id}',
+            'name': 'Tom', 'number': 89,
+            'updated_at': datetime.datetime.now()})
         self.assertTrue(isinstance(tes1.id, str))
 
     def test_unique_id(self):
@@ -97,9 +98,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn(f"{tes1.created_at}",
                       hold[tes1_name]["created_at"].replace("T", " "))
         self.assertIn("updated_at", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.updated_at}", hold[tes1_name]["updated_at"].replace("T", " "))
+        self.assertIn(f"{tes1.updated_at}",
+                      hold[tes1_name]["updated_at"].replace("T", " "))
         self.assertIn("__class__", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.__class__.__name__}", hold[tes1_name]["__class__"])
+        self.assertIn(f"{tes1.__class__.__name__}",
+                      hold[tes1_name]["__class__"])
 
     def test_to_dict(self):
         """
@@ -117,7 +120,8 @@ class TestBaseModel(unittest.TestCase):
         # self.assertAlmostEqual(f"{tes1.created_at.now()}",
         #                 new_dic["created_at"].replace("T", " "))
         self.assertIn("updated_at", new_dic.keys())
-        self.assertEqual(f"{tes1.updated_at}", new_dic["updated_at"].replace("T", " "))
+        self.assertEqual(f"{tes1.updated_at}",
+                         new_dic["updated_at"].replace("T", " "))
 
 
 if __name__ == '__main__':
