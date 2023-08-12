@@ -89,7 +89,18 @@ class TestBaseModel(unittest.TestCase):
         """
         tests to see if to dict works
         """
-        pass
+        tes1 = BaseModel(place="ken", name="Ele")
+        new_dic = tes1.to_dict()
+        self.assertIn("name", new_dic.keys())
+        self.assertEqual("Ele", new_dic["name"])
+        self.assertIn("place", new_dic.keys())
+        self.assertEqual("ken", new_dic["place"])
+        self.assertIn("id", new_dic.keys())
+        self.assertEqual(f"{tes1.id}", new_dic["id"])
+        self.assertIn("created_at", new_dic.keys())
+        self.assertEqual(f"{tes1.created_at}", new_dic["created_at"])
+        self.assertIn("updated_at", new_dic.keys())
+        self.assertEqual(f"{tes1.updated_at}", new_dic["updated_at"])
 
 
 if __name__ == '__main__':
