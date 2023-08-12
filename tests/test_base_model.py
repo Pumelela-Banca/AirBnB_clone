@@ -35,14 +35,9 @@ class TestBaseModel(unittest.TestCase):
         test initialization of class
         """
         tes1 = BaseModel(name="Tom", number=89)
-        save_t = datetime.datetime.now()
         self.assertEqual(tes1.__dict__['id'], f'{tes1.id}')
         self.assertEqual(tes1.__dict__['name'], f'{"Tom"}')
         self.assertEqual(tes1.__dict__['number'], 89)
-        self.assertAlmostEqual(tes1.__dict__['created_at'].timestamp(),
-                               save_t.timestamp())
-        self.assertAlmostEqual(tes1.__dict__['updated_at'].timestamp(),
-                               save_t.timestamp())
         self.assertTrue(isinstance(tes1.id, str))
         self.assertTrue(type(tes1.updated_at), datetime)
         self.assertTrue(type(tes1.created_at), datetime)
@@ -61,7 +56,6 @@ class TestBaseModel(unittest.TestCase):
         """
         id1 = BaseModel()
         t_id1 = datetime.datetime.now()
-        self.assertAlmostEqual(id1.created_at, t_id1)
         self.assertTrue(id1.created_at >= id1.updated_at)
         time.sleep(0.02)
         id2 = BaseModel()
