@@ -17,7 +17,9 @@ class TestAmenity(unittest.TestCase):
         """
         Test if class can be developed
         """
-        pass
+        amen = Amenity()
+
+
 
 
 if __name__ == '__main__':

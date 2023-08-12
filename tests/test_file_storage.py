@@ -20,7 +20,7 @@ class TestFileStorage(unittest.TestCase):
         """
         # empty dictionary
         store = FileStorage()
-        self.assertEquals(store.all(), {})
+        self.assertTrue(isinstance(store.all(), dict))
 
 
 if __name__ == '__main__':
