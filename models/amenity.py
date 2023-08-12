@@ -11,9 +11,9 @@ class Amenity(BaseModel):
     inherits from BaseModel class
     """
     name = ""
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """constructor method 
            being called everytime 
            new instance create
         """
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)

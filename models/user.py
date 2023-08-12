@@ -15,9 +15,9 @@ class User(BaseModel):
     first_name = ''
     last_name = ''
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """ construct method 
             called every time new
             instance created
         """
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)
