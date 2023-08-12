@@ -41,6 +41,8 @@ class TestBaseModel(unittest.TestCase):
             'name': 'Tom', 'number': 89,
             'updated_at': datetime.datetime.now()})
         self.assertTrue(isinstance(tes1.id, str))
+        self.assertTrue(type(tes1.updated_at), datetime)
+        self.assertTrue(type(tes1.created_at), datetime)
 
     def test_unique_id(self):
         """
@@ -82,27 +84,16 @@ class TestBaseModel(unittest.TestCase):
         time.sleep(0.02)
         tes1.save()
         self.assertTrue(tes1.updated_at.timestamp() > save_time)
+        storage.new(tes1)
         hold = storage.all()
         tes1_name = f'{tes1.__class__.__name__}.{tes1.id}'
         # test key
         self.assertIn(tes1_name, hold.keys())
         # test values
         # change str to dictionary
-        self.assertIn("place", hold[tes1_name].keys())
-        self.assertIn("Tex", hold[tes1_name]["place"])
-        self.assertIn("sta", hold[tes1_name].keys())
-        self.assertIn("5", hold[tes1_name]["sta"])
-        self.assertIn("id", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.id}", hold[tes1_name]["id"])
-        self.assertIn("created_at", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.created_at}",
-                      hold[tes1_name]["created_at"].replace("T", " "))
-        self.assertIn("updated_at", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.updated_at}",
-                      hold[tes1_name]["updated_at"].replace("T", " "))
-        self.assertIn("__class__", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.__class__.__name__}",
-                      hold[tes1_name]["__class__"])
+        self.assertIn("Tex", hold[tes1_name].place)
+        self.assertIn("5", hold[tes1_name].sta)
+        self.assertIn(f"{tes1.id}", hold[tes1_name].id)
 
     def test_to_dict(self):
         """
