@@ -98,9 +98,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("id", new_dic.keys())
         self.assertEqual(f"{tes1.id}", new_dic["id"])
         self.assertIn("created_at", new_dic.keys())
-        self.assertEqual(f"{tes1.created_at}", new_dic["created_at"])
+        self.assertEqual(f"{tes1.created_at.now()}",
+                         new_dic["created_at"].replace("T", " "))
         self.assertIn("updated_at", new_dic.keys())
-        self.assertEqual(f"{tes1.updated_at}", new_dic["updated_at"])
+        self.assertEqual(f"{tes1.updated_at}", new_dic["updated_at"].replace("T", " "))
 
 
 if __name__ == '__main__':
