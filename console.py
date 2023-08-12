@@ -35,42 +35,45 @@ class HBNBCommand(cmd.Cmd):
                 "update": self.do_update
         }
         args = line.split('.')
-        if len(args) != 2:
-            print(f"*** Unknown syntax: {line}")
-            return False
-        if HBNBCommand.dict_cls.get(args[0]) is None:
-            print(f"** class doesn't exist **")
-            return False
-        cmds = args[1].split('(')
-        if len(cmds) != 2:
-            print(f"*** Unknown syntax: {line}")
-            return False
-        arg_line = args[0]
-        if len(cmds[1]) > 1:
-            cmds[1] = '(' + cmds[1]
-            cmds[1] = cmds[1][:-1]
-            cmds[1] = cmds[1] + ',)'
-            cmds_tuple = eval(cmds[1])
-            if len(cmds_tuple) > 1 and type(cmds_tuple[1]) is dict:
-                arg_line += ' ' + cmds_tuple[0]
-                for ky, vl in cmds_tuple[1].items():
-                    update_str = arg_line
-                    update_str += ' ' + ky + ' ' + vl
-                    for k, v in cmnd_dict.items():
-                        if k == cmds[0]:
-                            v(update_str)
-                            print(update_str)
-                            break
-                return
-            for i in cmds_tuple:
-                arg_line += ' ' + i
-        flag = 0
-        for k, v in cmnd_dict.items():
-            if k == cmds[0]:
-                v(arg_line)
-                flag = 1
-                break
-        if flag == 0:
+        try:
+            if len(args) != 2:
+                print(f"*** Unknown syntax: {line}")
+                return False
+            if HBNBCommand.dict_cls.get(args[0]) is None:
+                print(f"** class doesn't exist **")
+                return False
+            cmds = args[1].split('(')
+            if len(cmds) != 2:
+                print(f"*** Unknown syntax: {line}")
+                return False
+            arg_line = args[0]
+            if len(cmds[1]) > 1:
+                cmds[1] = '(' + cmds[1]
+                cmds[1] = cmds[1][:-1]
+                cmds[1] = cmds[1] + ',)'
+                cmds_tuple = eval(cmds[1])
+                if len(cmds_tuple) > 1 and type(cmds_tuple[1]) is dict:
+                    arg_line += ' ' + cmds_tuple[0]
+                    for ky, vl in cmds_tuple[1].items():
+                        update_str = arg_line
+                        update_str += ' ' + str(ky) + ' ' + str(vl)
+                        for k, v in cmnd_dict.items():
+                            if k == cmds[0]:
+                                v(update_str)
+                                break
+                    return
+                for i in cmds_tuple:
+                    arg_line += ' ' + i
+            flag = 0
+            for k, v in cmnd_dict.items():
+                if k == cmds[0]:
+                    v(arg_line)
+                    flag = 1
+                    break
+            if flag == 0:
+                print(f"*** Unknown syntax: {line}")
+                return False
+        except Exception:
             print(f"*** Unknown syntax: {line}")
             return False
 
@@ -85,7 +88,6 @@ class HBNBCommand(cmd.Cmd):
         elif line == 'show':
             print("Prints the string representation "
                   "of an instance based on the class name")
-
         elif line == 'all':
             print("Prints all string representation of "
                   "all instances based or not on the class name")
@@ -96,9 +98,9 @@ class HBNBCommand(cmd.Cmd):
         elif line == 'count':
             print("count number of instance of specific class")
         else:
-            print('\nDocumented commands (type help <topic>):')
-            print('========================================')
-            print('EOF  help  quit create show update count all\n')
+            print('\nDocumented commands (type help <topic>):\n'
+                  '========================================\n'
+                  'EOF  help  quit create show update count all\n\n')
 
     def do_quit(self, line):
         '''exit the program'''
@@ -146,7 +148,9 @@ class HBNBCommand(cmd.Cmd):
             if obj.get(ky) is None:
                 print('** no instance found **')
             else:
-                print(f"[{args[0]}] ({args[1]}) {obj[ky]}")
+                Model = HBNBCommand.dict_cls.get(args[0])
+                model = Model(**eval(obj.get(ky)))
+                print(model)
 
     def do_destroy(self, line):
         '''Deletes an instance based on the class name and id'''
@@ -161,7 +165,6 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         else:
-            storage.reload()
             obj = storage.all()
             j = 0
             ky = args[0] + '.' + args[1]
@@ -177,26 +180,27 @@ class HBNBCommand(cmd.Cmd):
         ''' Prints all string representation of all
             instances based or not on the class name
         '''
+        obj = storage.all()
         if line == '':
-            storage.reload()
-            obj = storage.all()
             lst = []
-            for key in obj.keys():
+            for key, value in obj.items():
                 args = key.split('.')
-                lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
+                Model = HBNBCommand.dict_cls.get(args[0])
+                model = Model(**eval(value))
+                lst.append(model.__str__())
             print(lst)
 
         else:
             if HBNBCommand.dict_cls.get(line) is None:
                 print("** class doesn't exist **")
                 return
-            storage.reload()
-            obj = storage.all()
             lst = []
-            for key in obj.keys():
+            for key, value in obj.items():
                 if line in key:
                     args = key.split('.')
-                    lst.append(f"[{args[0]}] ({args[1]}) {obj[key]}")
+                    Model = HBNBCommand.dict_cls.get(args[0])
+                    model = Model(**eval(value))
+                    lst.append(model.__str__())
             print(lst)
 
     def do_update(self, line):
@@ -215,7 +219,6 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         else:
-            storage.reload()
             obj = storage.all()
             j = 0
             ky = args[0] + '.' + args[1]
@@ -237,13 +240,20 @@ class HBNBCommand(cmd.Cmd):
             obj = HBNBCommand.dict_cls.get(args[0])(**var)
             '''set attribute'''
             attr = args[2]
-            att_value = args[3][1:-1] if args[3][1] == '"'\
-                and args[3][-1] == '"' else args[3]
+            try:
+                att_value = eval(args[3])
+            except Exception:
+                att_value = args[3]
             setattr(obj, attr, att_value)
             obj.save()
 
     def do_count(self, line):
-        storage.reload()
+        if line == "":
+            print('** class name missing **')
+            return False
+        elif HBNBCommand.dict_cls.get(line) is None:
+            print("** class doesn't exist **")
+            return False
         obj = storage.all()
         count = 0
         for key in obj.keys():
