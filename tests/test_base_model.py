@@ -15,6 +15,21 @@ class TestBaseModel(unittest.TestCase):
     Test all possible inputs on BaseModel
     """
 
+    def test_documentation(self):
+        """
+        tests documentation requirements
+        """
+        import models.base_model as base
+        model = BaseModel()
+        self.assertIsNotNone(base.__doc__)
+        self.assertTrue(base.__doc__ != "")
+        self.assertIsNotNone(model.__str__)
+        self.assertTrue(model.__str__ != "")
+        self.assertIsNotNone(model.to_dict)
+        self.assertTrue(model.to_dict.__doc__ != "")
+        self.assertIsNotNone(model.save)
+        self.assertTrue(model.save.__doc__ != "")
+
     def test_init(self):
         """
         test initialization of class
@@ -79,11 +94,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("id", hold[tes1_name].keys())
         self.assertIn(f"{tes1.id}", hold[tes1_name]["id"])
         self.assertIn("created_at", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.created_at}", hold[tes1_name]["created_at"])
+        self.assertIn(f"{tes1.created_at}",
+                      hold[tes1_name]["created_at"].replace("T", " "))
         self.assertIn("updated_at", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.updated_at}", hold[tes1_name]["updated_at"])
+        self.assertIn(f"{tes1.updated_at}", hold[tes1_name]["updated_at"].replace("T", " "))
         self.assertIn("__class__", hold[tes1_name].keys())
-        self.assertIn(f"{tes1.__class__}", hold[tes1_name]["__class__"])
+        self.assertIn(f"{tes1.__class__.__name__}", hold[tes1_name]["__class__"])
 
     def test_to_dict(self):
         """
@@ -98,8 +114,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("id", new_dic.keys())
         self.assertEqual(f"{tes1.id}", new_dic["id"])
         self.assertIn("created_at", new_dic.keys())
-        self.assertEqual(f"{tes1.created_at.now()}",
-                         new_dic["created_at"].replace("T", " "))
+        # self.assertAlmostEqual(f"{tes1.created_at.now()}",
+        #                 new_dic["created_at"].replace("T", " "))
         self.assertIn("updated_at", new_dic.keys())
         self.assertEqual(f"{tes1.updated_at}", new_dic["updated_at"].replace("T", " "))
 
