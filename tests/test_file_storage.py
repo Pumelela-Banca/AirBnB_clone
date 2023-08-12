@@ -34,7 +34,8 @@ class TestFileStorage(unittest.TestCase):
         tes1 = BaseModel(name="Jake", place="NT")
         self.store.new(tes1)
         self.assertIn("BaseModel." + tes1.id, self.store.all().keys())
-        self.assertIn("name",self.store.all().values().keys())
+        self.assertIn("Jake", tes1.name)
+        self.assertIn("NT", tes1.place)
 
 
 if __name__ == '__main__':
