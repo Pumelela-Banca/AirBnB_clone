@@ -120,7 +120,6 @@ class HBNBCommand(cmd.Cmd):
             for cl, val in HBNBCommand.dict_cls.items():
                 if cl == line:
                     obj = val()
-                    obj.save()
                     print(obj.id)
                     return
             print("** class doesn't exist **")
@@ -149,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
                 print('** no instance found **')
             else:
                 Model = HBNBCommand.dict_cls.get(args[0])
-                model = Model(**eval(obj.get(ky)))
+                model = Model(**(obj.get(ky)))
                 print(model)
 
     def do_destroy(self, line):
@@ -186,7 +185,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in obj.items():
                 args = key.split('.')
                 Model = HBNBCommand.dict_cls.get(args[0])
-                model = Model(**eval(value))
+                model = Model(**value)
                 lst.append(model.__str__())
             print(lst)
 
@@ -199,7 +198,7 @@ class HBNBCommand(cmd.Cmd):
                 if line in key:
                     args = key.split('.')
                     Model = HBNBCommand.dict_cls.get(args[0])
-                    model = Model(**eval(value))
+                    model = Model(**value)
                     lst.append(model.__str__())
             print(lst)
 
@@ -236,7 +235,6 @@ class HBNBCommand(cmd.Cmd):
                 return
             var = obj[ky]
             '''convert string value to dict to be able to use it as **kwargs'''
-            var = eval(var)
             obj = HBNBCommand.dict_cls.get(args[0])(**var)
             '''set attribute'''
             attr = args[2]

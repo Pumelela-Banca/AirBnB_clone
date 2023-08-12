@@ -26,7 +26,7 @@ class FileStorage:
         adds new value to __objects
         """
         key = f'{obj.__class__.__name__}.{obj.id}'
-        value = f'{obj.to_dict()}'
+        value = obj.to_dict()
         FileStorage.__objects[key] = value
 
     def save(self):
