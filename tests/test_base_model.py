@@ -55,6 +55,12 @@ class TestBaseModel(unittest.TestCase):
             f"[{test1.__class__.__name__}] ({test1.id}) {test1.__dict__}",
             f"[BaseModel] ({test1.id}) {test1.__dict__}")
 
+    def test_save(self):
+        """
+        tests save and if file is in file.json
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
