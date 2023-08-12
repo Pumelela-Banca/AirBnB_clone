@@ -2,12 +2,14 @@
 '''define class BaseModel'''
 import uuid
 import datetime
-from . import storage
+import models
 
 class BaseModel:
     '''class BaseModel'''
     def __init__(self, *args, **kwargs):
-        '''init Method - constructor'''
+        '''constructor method executed every
+           time a new instance is created
+        '''
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
         self.updated_at = self.created_at
@@ -20,7 +22,7 @@ class BaseModel:
                 else:
                     setattr(self, key, kwargs[key])
         else:
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         ''' return printable string represantation
@@ -33,8 +35,7 @@ class BaseModel:
            with the current datetime
         '''
         self.updated_at = datetime.datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.save()
 
 
     def to_dict(self):

@@ -8,6 +8,12 @@ store user, place, amenity, city, state and review
 
 import os
 import json
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -26,20 +32,26 @@ class FileStorage:
         adds new value to __objects
         """
         key = f'{obj.__class__.__name__}.{obj.id}'
-        value = obj.to_dict()
-        FileStorage.__objects[key] = value
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """
-        saves __objects to file
+        serialize and deseralize object to json file
         """
-        with open(FileStorage.__file_path, "w") as fh:
-            json.dump(FileStorage.__objects, fh)
+        dict1 = {}
+        for key, value in FileStorage.__objects.items():
+            dict1[key] = value.to_dict()
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as fh:
+            json.dump(dict1, fh)
 
     def reload(self):
         """
         loads dictionary from object
         """
-        if os.path.exists(FileStorage.__file_path):
+        try:
             with open(FileStorage.__file_path) as fh:
-                FileStorage.__objects = json.load(fh)
+                dict2 = json.load(fh)
+            for key, value in dict2.items():
+                self.new(eval(key.split(".")[0])(**value))
+        except Exception:
+            return
