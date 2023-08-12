@@ -3,7 +3,8 @@
 Tests base model class and its instances
 """
 
-
+import datetime
+import time
 import unittest
 from models.base_model import BaseModel
 
@@ -12,15 +13,17 @@ class TestBaseModel(unittest.TestCase):
     """
     Test all possible inputs on BaseModel
     """
+
     def test_init(self):
         """
         test initialization of class
         """
         tes1 = BaseModel(name="Tom", number=89)
-        # attributes not added to dictionary __dict__
-        #self.assertTrue(isinstance(tes1.id, str))
-        #self.assertEqual(tes1.name, "Tom")
-        #self.assertEqual(tes1.number, 89)
+        self.assertEqual(tes1.__dict__, {'created_at': datetime.datetime.now(),
+                                         'id': f'{tes1.id}',
+                                         'name': 'Tom', 'number': 89,
+                                         'updated_at': datetime.datetime.now()})
+        self.assertTrue(isinstance(tes1.id, str))
 
     def test_unique_id(self):
         """
@@ -32,9 +35,16 @@ class TestBaseModel(unittest.TestCase):
 
     def test_time(self):
         """
-        test time values for created_at and updated_at
+        test time values for created_at and updated_at with delay 0.02s
         """
-        pass
+        id1 = BaseModel()
+        t_id1 = datetime.datetime.now()
+        self.assertAlmostEqual(id1.created_at, t_id1)
+        self.assertTrue(id1.created_at >= id1.updated_at)
+        time.sleep(0.02)
+        id2 = BaseModel()
+        self.assertNotEqual(id2.created_at.timestamp(),
+                            id1.created_at.timestamp())
 
     def test_print_format(self):
         """
