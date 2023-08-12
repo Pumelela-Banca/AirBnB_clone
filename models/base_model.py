@@ -1,8 +1,12 @@
 #!/usr/bin/python3
+
 '''define class BaseModel'''
+
+
 import uuid
 import datetime
 import models
+
 
 class BaseModel:
     '''class BaseModel'''
@@ -18,7 +22,9 @@ class BaseModel:
                 if key == '__class__':
                     continue
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self,key, datetime.datetime.strptime(kwargs[key], '%Y-%m-%dT%H:%M:%S.%f'))
+                    setattr(self, key,
+                            datetime.datetime.strptime(
+                                kwargs[key], '%Y-%m-%dT%H:%M:%S.%f'))
                 else:
                     setattr(self, key, kwargs[key])
         else:
@@ -37,11 +43,11 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
         models.storage.save()
 
-
     def to_dict(self):
         '''returns a dictionary containing all keys/values
            of __dict__ of the instance:
-           * by using self.__dict__, only instance attributes set will be returned
+           * by using self.__dict__, only instance attributes
+           * set will be returned
            * a key __class__ must be added to this dictionary with the
            class name of the object created_at and updated_at must be
            converted to string object in ISO format:
