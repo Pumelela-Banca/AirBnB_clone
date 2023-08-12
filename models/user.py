@@ -11,10 +11,10 @@ class User(BaseModel):
     """
     class controlling user details
     """
-    self.email = ''
-    self.password = ''
-    self.first_name = ''
-    self.last_name = ''
+    email = ''
+    password = ''
+    first_name = ''
+    last_name = ''
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
