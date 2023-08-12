@@ -27,6 +27,9 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def default(self, line):
+        """default method to customise
+           how thing should works
+        """
         cmnd_dict = {
                 "all": self.do_all,
                 "show": self.do_show,
@@ -76,31 +79,6 @@ class HBNBCommand(cmd.Cmd):
         except Exception:
             print(f"*** Unknown syntax: {line}")
             return False
-
-    def do_help(self, line):
-        '''Get some help'''
-        if line == 'quit':
-            print('Quit command to exit the program')
-        elif line == 'EOF':
-            print('EOF command to exit the program')
-        elif line == 'create':
-            print("Creates a new instance of BaseModel")
-        elif line == 'show':
-            print("Prints the string representation "
-                  "of an instance based on the class name")
-        elif line == 'all':
-            print("Prints all string representation of "
-                  "all instances based or not on the class name")
-        elif line == 'update':
-            print("Updates an instance based on the class name "
-                  "and id by adding or updating attribute "
-                  "(save the change into the JSON file).")
-        elif line == 'count':
-            print("count number of instance of specific class")
-        else:
-            print('\nDocumented commands (type help <topic>):\n'
-                  '========================================\n'
-                  'EOF  help  quit create show update count all\n\n')
 
     def do_quit(self, line):
         '''exit the program'''
@@ -240,6 +218,7 @@ class HBNBCommand(cmd.Cmd):
             var.save()
 
     def do_count(self, line):
+        """count number of instance of specific class"""
         if line == "":
             print('** class name missing **')
             return False

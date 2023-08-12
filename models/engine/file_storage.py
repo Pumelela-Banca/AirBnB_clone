@@ -52,7 +52,8 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path) as fh:
                 dict2 = json.load(fh)
-            for key, value in dict2.items():
-                self.new(eval(key.split(".")[0])(**value))
-        except Exception:
+                for key, value in dict2.items():
+                    del value['__class__']
+                    self.new(eval(key.split(".")[0])(**value))
+        except FileNotFoundError:
             return
