@@ -5,7 +5,6 @@ Tests base model class and its instances
 
 
 import unittest
-from models.base_model import BaseModel
 from models.amenity import Amenity
 
 
@@ -17,12 +16,13 @@ class TestAmenity(unittest.TestCase):
         """
         Test if class can be developed
         """
+        pass
 
     def test_print_format(self):
         """
         tests __str__ result
         """
-        test1 = BaseModel()
+        test1 = Amenity()
         self.assertEqual(str(test1), f"[Amenity] ({test1.id}) {test1.__dict__}")
 
 

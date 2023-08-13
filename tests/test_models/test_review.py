@@ -17,7 +17,7 @@ class TestReview(unittest.TestCase):
         """
         tests __str__ result
         """
-        test1 = BaseModel()
+        test1 = Review()
         self.assertEqual(str(test1) , f"[Review] ({test1.id}) {test1.__dict__}")
 
 
