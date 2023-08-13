@@ -55,7 +55,6 @@ class TestBaseModel(unittest.TestCase):
         test time values for created_at and updated_at with delay 0.02s
         """
         id1 = BaseModel()
-        t_id1 = datetime.datetime.now()
         self.assertTrue(id1.created_at >= id1.updated_at)
         time.sleep(0.02)
         id2 = BaseModel()

@@ -14,6 +14,27 @@ class TestFileStorage(unittest.TestCase):
     """
     tests for storage methods
     """
+
+    def test_documentation(self):
+        """
+        test if module is properly documented
+        """
+        """
+                tests documentation requirements
+                """
+        import models.engine.file_storage as strn
+        model = FileStorage()
+        self.assertIsNotNone(strn.__doc__)
+        self.assertTrue(strn.__doc__ != "")
+        self.assertIsNotNone(model.reload)
+        self.assertTrue(model.reload != "")
+        self.assertIsNotNone(model.save)
+        self.assertTrue(model.save != "")
+        self.assertIsNotNone(model.new)
+        self.assertTrue(model.new.__doc__ != "")
+        self.assertIsNotNone(model.all)
+        self.assertTrue(model.all.__doc__ != "")
+
     def setUp(self) -> None:
         """
         set up store
