@@ -17,7 +17,7 @@ class TestCity(unittest.TestCase):
         """
         tests __str__ result
         """
-        test1 = BaseModel()
+        test1 = City()
         self.assertEqual(str(test1) , f"[City] ({test1.id}) {test1.__dict__}")
 
 
