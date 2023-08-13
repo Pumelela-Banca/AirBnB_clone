@@ -18,7 +18,7 @@ class TestCity(unittest.TestCase):
         tests __str__ result
         """
         test1 = City()
-        self.assertEqual(str(test1) , f"[City] ({test1.id}) {test1.__dict__}")
+        self.assertEqual(str(test1), f"[City] ({test1.id}) {test1.__dict__}")
 
 
 if __name__ == '__main__':
