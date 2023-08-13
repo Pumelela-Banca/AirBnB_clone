@@ -52,14 +52,13 @@ class TestFileStorage(unittest.TestCase):
         """
         test if new works
         """
-        tes1 = BaseModel()
+        tes1 = BaseModel(name="Bob", jk="Korea")
         self.store.new(tes1)
         self.assertIn("BaseModel." + tes1.id, self.store.all().keys())
-        vals = self.store.all().values()
-        for x in vals:
-            for y in x.to_dict():
-                if y == x:
-                    self.assertEqual(x, y)
+        for x in self.store.all().keys():
+            if x == f"BaseModel.{tes1.id}":
+                for d in ["name", "jk", "created_at", "updated_at", "id"]:
+                    self.assertIn(d, self.store.all()[f"BaseModel.{tes1.id}"].to_dict())
 
 
 if __name__ == '__main__':
