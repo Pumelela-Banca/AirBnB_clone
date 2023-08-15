@@ -37,6 +37,8 @@ class HBNBCommand(cmd.Cmd):
                 "count": self.do_count,
                 "update": self.do_update
         }
+        if line == " \n" or "\n":
+            return
         args = line.split('.')
         try:
             if len(args) != 2:
