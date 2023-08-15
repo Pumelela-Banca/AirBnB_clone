@@ -37,8 +37,6 @@ class HBNBCommand(cmd.Cmd):
                 "count": self.do_count,
                 "update": self.do_update
         }
-        if line == " \n" or "\n":
-            return
         args = line.split('.')
         try:
             if len(args) != 2:
@@ -85,6 +83,10 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         '''exit the program'''
         return True
+    
+    def emptyline(self):
+        '''empty line. do nothing'''
+        pass
 
     def do_EOF(self, line):
         '''exit the program'''
