@@ -1,0 +1,14 @@
+header {
+    color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.log {
+    background-image: url("../images/logo.png");
+    width: 101px;
+    height: 20px;
+    padding: 20px;
+    margin-left: 20px;
+}
