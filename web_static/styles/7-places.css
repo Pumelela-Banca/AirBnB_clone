@@ -49,12 +49,11 @@ div.amenities {
     border-radius: 4px;
     background-color: #FAFAFA;
     position: relative;
-    padding-left: 0;
+    padding-left: 10px;
     width: 100%;
+    text-align: left;
     
 }
-
-
 
 h3 {
     font-weight: 600;
@@ -66,7 +65,8 @@ h4 {
     padding-left: 0;
     font-weight: 400;
     font-size: 14px;
-    margin-bottom: 0;
+    margin-top: 0;
+    
 }
 
 .popover li {
@@ -83,6 +83,19 @@ ul {
 
 .container .filters .locations:hover .popover, 
 .container .filters .amenities:hover .popover {
-    padding: 0;
+    padding: 5;
     display: block;
+}
+
+hi.places  {
+    text-align: left;
+    font-size: 30px;
+}
+
+article.places {
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 4px;
+    b
 }
