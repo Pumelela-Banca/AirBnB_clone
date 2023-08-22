@@ -40,20 +40,7 @@ div.amenities {
     position: absolute;
     height: 100%;
     width: 25%;
-    margin-left: 200px;
-    
-    
-}
-
-h3 {
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-h4 {
-    font-weight: 400;
-    font-size: 14px;
-    margin-bottom: 0;
+    margin-left: 200px;    
 }
 
 .popover {
@@ -62,17 +49,24 @@ h4 {
     border-radius: 4px;
     background-color: #FAFAFA;
     position: relative;
+    padding-left: 0;
+    width: 100%;
     
-
-
 }
 
-.locations:hover .popover {
-    display: block;
+
+
+h3 {
+    font-weight: 600;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
-.amenities:hover .popover {
-    display: block;
+h4 {
+    padding-left: 0;
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 0;
 }
 
 .popover li {
@@ -80,14 +74,15 @@ h4 {
 }
 
 .popover h2 {
-    display: inline-block;
-    font-size: 16px;
-}
-
-.popover .california, .popover .arizona {
-    padding: 10%;
+    display: block;
 }
 
 ul {
     list-style: none;
+}
+
+.container .filters .locations:hover .popover, 
+.container .filters .amenities:hover .popover {
+    padding: 0;
+    display: block;
 }
